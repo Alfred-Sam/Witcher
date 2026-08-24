@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilih Faksi | The Witcher Realms</title>
+    <title>Choose Your Faction | The Witcher Realms</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@
             padding: 60px 20px;
             position: relative;
             overflow-x: hidden;
-            /* Tambahkan animasi pembuka untuk halaman ini */
+            /* Add opening animation for this page */
             animation: fadeInPage 0.6s ease-out forwards;
         }
 
@@ -203,7 +203,7 @@
             text-transform: uppercase;
         }
 
-        /* Overlay untuk efek Fade Out saat pindah halaman */
+        /* Overlay for Fade Out transition on page change */
         .page-transition-overlay {
             position: fixed;
             top: 0;
@@ -352,20 +352,20 @@
 
 <body>
 
-    <!-- Overlay Diletakkan di Atas -->
+    <!-- Overlay Placed on Top -->
     <div class="page-transition-overlay" id="transition-overlay"></div>
 
     <canvas id="particle-canvas"></canvas>
     <div class="ambient-bg"></div>
 
     <div class="header-title">
-        <h1>Tentukan Kesetiaan Anda</h1>
-        <p>Pilih faksi untuk memasuki medan takdir</p>
+        <h1>Pledge Your Allegiance</h1>
+        <p>Choose a faction to enter the realm of destiny</p>
     </div>
 
     <div class="faction-container">
 
-        <!-- Faksi 1: Nilfgaard -->
+        <!-- Faction 1: Nilfgaard -->
         <a href="Nilfgaardian_Empire.html" class="faction-card card-nilfgaard" data-faction="nilfgaard">
             <div class="faction-icon">
                 <svg viewBox="0 0 24 24">
@@ -374,12 +374,12 @@
             </div>
             <div>
                 <h2>Nilfgaardian Empire</h2>
-                <p>Imperium megah selatan dengan kedisiplinan militer tanpa tanding. Di bawah panji Matahari Emas, taklukkan seluruh benua!</p>
+                <p>The majestic empire of the south with unmatched military discipline. Beneath the banner of the Great Sun, conquer the entire continent!</p>
             </div>
-            <span class="btn-select">MASUKI NILFGAARD</span>
+            <span class="btn-select">ENTER NILFGAARD</span>
         </a>
 
-        <!-- Faksi 2: Skellige -->
+        <!-- Faction 2: Skellige -->
         <a href="Skelige.html" class="faction-card card-skellige" data-faction="skellige">
             <div class="faction-icon">
                 <svg viewBox="0 0 24 24">
@@ -388,12 +388,12 @@
             </div>
             <div>
                 <h2>Skellige Isles</h2>
-                <p>Para pejuang laut tangguh di tengah badai samudra. Berperang demi klan, kehormatan, serta restu Dewi Freya.</p>
+                <p>Fierce seaborne warriors forged amidst oceanic storms. Fighting for clan, honor, and the blessing of the Goddess Freya.</p>
             </div>
-            <span class="btn-select">MASUKI SKELLIGE</span>
+            <span class="btn-select">ENTER SKELLIGE</span>
         </a>
 
-        <!-- Faksi 3: Redania -->
+        <!-- Faction 3: Redania -->
         <a href="Redania_Empire.html" class="faction-card card-redania" data-faction="redania">
             <div class="faction-icon">
                 <svg viewBox="0 0 24 24">
@@ -402,9 +402,9 @@
             </div>
             <div>
                 <h2>Redania Empire</h2>
-                <p>Benteng utama pertahanan utara. Mengandalkan strategi perang mematikan dan hegemoni Pasukan Elang Emas.</p>
+                <p>The primary stronghold of the northern defense. Driven by lethal war strategies and the hegemony of the Golden Eagle forces.</p>
             </div>
-            <span class="btn-select">MASUKI REDANIA</span>
+            <span class="btn-select">ENTER REDANIA</span>
         </a>
 
     </div>
@@ -476,13 +476,13 @@
 
         cards.forEach(card => {
             card.addEventListener('click', (e) => {
-                e.preventDefault(); // Tahan dulu perpindahan halaman instan
+                e.preventDefault(); // Delay instant page transition
                 const targetUrl = card.getAttribute('href');
 
-                // Aktifkan efek hitam (fade out)
+                // Activate black fade-out effect
                 overlay.classList.add('active');
 
-                // Pindah halaman setelah animasi fade (500ms)
+                // Navigate after fade animation (500ms)
                 setTimeout(() => {
                     window.location.href = targetUrl;
                 }, 500);
