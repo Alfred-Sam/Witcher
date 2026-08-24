@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Faksi | The Witcher Realms</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #030508;
+            --nilfgaard-gold: #f5af19;
+            --nilfgaard-glow: rgba(245, 175, 25, 0.4);
+            --skellige-teal: #00f2fe;
+            --skellige-glow: rgba(0, 242, 254, 0.4);
+            --redania-red: #ff0844;
+            --redania-glow: rgba(255, 8, 68, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow-x: hidden;
+            /* Tambahkan animasi pembuka untuk halaman ini */
+            animation: fadeInPage 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Particle Canvas */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Ambient Dynamic Background Aura */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            transition: all 0.8s ease;
+            opacity: 0.6;
+            background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.8) 0%, var(--bg-dark) 100%);
+        }
+
+        body[data-active-faction="nilfgaard"] .ambient-bg {
+            background: radial-gradient(circle at 20% 50%, rgba(245, 175, 25, 0.25) 0%, var(--bg-dark) 70%);
+        }
+
+        body[data-active-faction="skellige"] .ambient-bg {
+            background: radial-gradient(circle at 50% 50%, rgba(0, 242, 254, 0.25) 0%, var(--bg-dark) 70%);
+        }
+
+        body[data-active-faction="redania"] .ambient-bg {
+            background: radial-gradient(circle at 80% 50%, rgba(255, 8, 68, 0.25) 0%, var(--bg-dark) 70%);
+        }
+
+        /* Header Title */
+        .header-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-title h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 3.2rem;
+            letter-spacing: 4px;
+            background: linear-gradient(180deg, #ffffff 30%, #a1a1a1 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            margin-bottom: 12px;
+        }
+
+        .header-title p {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: #94a3b8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Faction Grid Container */
+        .faction-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+            max-width: 1250px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Faction Card Base */
+        .faction-card {
+            background: rgba(10, 15, 24, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 45px 30px 35px 30px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            backdrop-filter: blur(16px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Top Shimmer Line */
+        .faction-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            transition: 0.6s ease;
+        }
+
+        .faction-card:hover::before {
+            left: 100%;
+        }
+
+        /* Icon Container */
+        .faction-icon {
+            width: 85px;
+            height: 85px;
+            margin-bottom: 25px;
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+
+        .faction-card h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.7rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .faction-card p {
+            font-size: 0.92rem;
+            color: #a0aec0;
+            line-height: 1.7;
+            margin-bottom: 35px;
+            font-weight: 300;
+        }
+
+        .btn-select {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            padding: 14px 28px;
+            border-radius: 8px;
+            border: 1px solid;
+            background: transparent;
+            transition: all 0.4s ease;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        /* Overlay untuk efek Fade Out saat pindah halaman */
+        .page-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #030508;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .page-transition-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* --- Nilfgaard Style --- */
+        .card-nilfgaard::before {
+            background: linear-gradient(90deg, transparent, var(--nilfgaard-gold), transparent);
+        }
+
+        .card-nilfgaard .faction-icon svg {
+            fill: var(--nilfgaard-gold);
+        }
+
+        .card-nilfgaard h2 {
+            color: #fff;
+        }
+
+        .card-nilfgaard .btn-select {
+            border-color: rgba(245, 175, 25, 0.4);
+            color: var(--nilfgaard-gold);
+        }
+
+        .card-nilfgaard:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--nilfgaard-gold);
+            box-shadow: 0 20px 40px var(--nilfgaard-glow);
+        }
+
+        .card-nilfgaard:hover h2 {
+            color: var(--nilfgaard-gold);
+        }
+
+        .card-nilfgaard:hover .faction-icon {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .card-nilfgaard:hover .btn-select {
+            background: var(--nilfgaard-gold);
+            color: #000;
+            box-shadow: 0 0 20px var(--nilfgaard-gold);
+        }
+
+        /* --- Skellige Style --- */
+        .card-skellige::before {
+            background: linear-gradient(90deg, transparent, var(--skellige-teal), transparent);
+        }
+
+        .card-skellige .faction-icon svg {
+            fill: var(--skellige-teal);
+        }
+
+        .card-skellige h2 {
+            color: #fff;
+        }
+
+        .card-skellige .btn-select {
+            border-color: rgba(0, 242, 254, 0.4);
+            color: var(--skellige-teal);
+        }
+
+        .card-skellige:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--skellige-teal);
+            box-shadow: 0 20px 40px var(--skellige-glow);
+        }
+
+        .card-skellige:hover h2 {
+            color: var(--skellige-teal);
+        }
+
+        .card-skellige:hover .faction-icon {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        .card-skellige:hover .btn-select {
+            background: var(--skellige-teal);
+            color: #000;
+            box-shadow: 0 0 20px var(--skellige-teal);
+        }
+
+        /* --- Redania Style --- */
+        .card-redania::before {
+            background: linear-gradient(90deg, transparent, var(--redania-red), transparent);
+        }
+
+        .card-redania .faction-icon svg {
+            fill: var(--redania-red);
+        }
+
+        .card-redania h2 {
+            color: #fff;
+        }
+
+        .card-redania .btn-select {
+            border-color: rgba(255, 8, 68, 0.4);
+            color: var(--redania-red);
+        }
+
+        .card-redania:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--redania-red);
+            box-shadow: 0 20px 40px var(--redania-glow);
+        }
+
+        .card-redania:hover h2 {
+            color: var(--redania-red);
+        }
+
+        .card-redania:hover .faction-icon {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .card-redania:hover .btn-select {
+            background: var(--redania-red);
+            color: #fff;
+            box-shadow: 0 0 20px var(--redania-red);
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 992px) {
+            .faction-container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .header-title h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Overlay Diletakkan di Atas -->
+    <div class="page-transition-overlay" id="transition-overlay"></div>
+
+    <canvas id="particle-canvas"></canvas>
+    <div class="ambient-bg"></div>
+
+    <div class="header-title">
+        <h1>Tentukan Kesetiaan Anda</h1>
+        <p>Pilih faksi untuk memasuki medan takdir</p>
+    </div>
+
+    <div class="faction-container">
+
+        <!-- Faksi 1: Nilfgaard -->
+        <a href="Nilfgaardian_Empire.html" class="faction-card card-nilfgaard" data-faction="nilfgaard">
+            <div class="faction-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6L10.5,9.5L7,10L9.5,12.5L9,16L12,14.25L15,16L14.5,12.5L17,10L13.5,9.5L12,6Z" />
+                </svg>
+            </div>
+            <div>
+                <h2>Nilfgaardian Empire</h2>
+                <p>Imperium megah selatan dengan kedisiplinan militer tanpa tanding. Di bawah panji Matahari Emas, taklukkan seluruh benua!</p>
+            </div>
+            <span class="btn-select">MASUKI NILFGAARD</span>
+        </a>
+
+        <!-- Faksi 2: Skellige -->
+        <a href="Skelige.html" class="faction-card card-skellige" data-faction="skellige">
+            <div class="faction-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20,21A1,1 0 0,1 19,20C19,18 17.5,16.5 15.5,16.5C13.5,16.5 12,18 12,20A1,1 0 0,1 11,20C11,18 9.5,16.5 7.5,16.5C5.5,16.5 4,18 4,20A1,1 0 0,1 2,20C2,17 4.5,14.5 7.5,14.5C9.3,14.5 10.8,15.4 11.7,16.7C12.4,15.4 13.9,14.5 15.7,14.5C18.7,14.5 21.2,17 21.2,20A1,1 0 0,1 20,21M12,2A2,2 0 0,1 14,4C14,6.7 11.5,9.8 12,13C11.5,13 8,9.5 8,6C8,3.8 9.8,2 12,2Z" />
+                </svg>
+            </div>
+            <div>
+                <h2>Skellige Isles</h2>
+                <p>Para pejuang laut tangguh di tengah badai samudra. Berperang demi klan, kehormatan, serta restu Dewi Freya.</p>
+            </div>
+            <span class="btn-select">MASUKI SKELLIGE</span>
+        </a>
+
+        <!-- Faksi 3: Redania -->
+        <a href="Redania_Empire.html" class="faction-card card-redania" data-faction="redania">
+            <div class="faction-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12,2L4,5V11C4,16.55 7.4,21.74 12,23C16.6,21.74 20,16.55 20,11V5L12,2M12,4.18L18,6.43V11C18,15.45 15.45,19.6 12,20.83C8.55,19.6 6,15.45 6,11V6.43L12,4.18Z" />
+                </svg>
+            </div>
+            <div>
+                <h2>Redania Empire</h2>
+                <p>Benteng utama pertahanan utara. Mengandalkan strategi perang mematikan dan hegemoni Pasukan Elang Emas.</p>
+            </div>
+            <span class="btn-select">MASUKI REDANIA</span>
+        </a>
+
+    </div>
+
+    <!-- Interactive Script -->
+    <script>
+        // Hover Background Trigger
+        const cards = document.querySelectorAll('.faction-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                document.body.setAttribute('data-active-faction', card.dataset.faction);
+            });
+            card.addEventListener('mouseleave', () => {
+                document.body.removeAttribute('data-active-faction');
+            });
+        });
+
+        // Floating Dust Particle Effect
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedY = Math.random() * -0.5 - 0.2;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.y += this.speedY;
+                if (this.y < 0) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 70; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Smooth Page Transition Handler
+        const overlay = document.getElementById('transition-overlay');
+
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault(); // Tahan dulu perpindahan halaman instan
+                const targetUrl = card.getAttribute('href');
+
+                // Aktifkan efek hitam (fade out)
+                overlay.classList.add('active');
+
+                // Pindah halaman setelah animasi fade (500ms)
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 500);
+            });
+        });
+    </script>
+</body>
+
+</html>
