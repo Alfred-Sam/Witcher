@@ -7,20 +7,17 @@
     <title>Redanian Empire | Official Imperial Landing Page</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Montserrat:wght@300;400;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary-red: #8b0000;
-            --red-light: #b22222;
-            --gold: #d4af37;
-            --gold-light: #f3e5ab;
-            --gold-dark: #997a15;
+            --primary-red: #ff0844;
+            --red-light: #ff4d6d;
+            --red-dark: #800020;
+            --crimson-glow: rgba(255, 8, 68, 0.5);
             --bg-dark: #0a0a0a;
             --bg-card: #141414;
-            --border-gold: 1px solid #d4af37;
+            --border-red: 1px solid #ff0844;
         }
 
         * {
@@ -87,8 +84,8 @@
             pointer-events: none;
             z-index: -1;
             background:
-                radial-gradient(circle at 20% 30%, rgba(139, 0, 0, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.08) 0%, transparent 40%);
+                radial-gradient(circle at 20% 30%, rgba(255, 8, 68, 0.18) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(128, 0, 32, 0.15) 0%, transparent 40%);
             animation: pulseBg 12s ease-in-out infinite alternate;
         }
 
@@ -125,7 +122,7 @@
             top: 0;
             width: 100%;
             background: rgba(10, 10, 10, 0.95);
-            border-bottom: 2px solid var(--gold);
+            border-bottom: 2px solid var(--primary-red);
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
@@ -137,14 +134,16 @@
         .logo {
             font-size: 1.3rem;
             font-weight: 900;
-            color: var(--gold);
+            color: var(--primary-red);
             letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--crimson-glow);
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 25px;
+            align-items: center;
         }
 
         .nav-links a {
@@ -158,20 +157,22 @@
         }
 
         .nav-links a:hover {
-            color: var(--gold);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+            color: var(--primary-red);
+            text-shadow: 0 0 10px var(--crimson-glow);
         }
+
+
 
         /* --- PLACEHOLDER KOSONGAN FOTO --- */
         .img-placeholder {
             width: 100%;
             background-color: #050505;
-            border: 1px dashed var(--gold);
+            border: 1px dashed var(--primary-red);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: var(--gold);
+            color: var(--primary-red);
             font-family: 'Cinzel', serif;
             font-size: 0.85rem;
             text-align: center;
@@ -189,7 +190,7 @@
             left: 0;
         }
 
-        /* --- HERO BANNER (PARALLAX EFFECT) --- */
+        /* --- HERO BANNER --- */
         .hero {
             width: 100%;
             min-height: 90vh;
@@ -199,23 +200,23 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: radial-gradient(circle, #1a0000 0%, #0a0a0a 100%);
-            border-bottom: 1px solid var(--gold-dark);
+            background: radial-gradient(circle, #2a0008 0%, #0a0a0a 100%);
+            border-bottom: 1px solid var(--red-dark);
             position: relative;
             overflow: hidden;
         }
 
         .hero h1 {
             font-size: 3.2rem;
-            color: var(--gold);
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            color: var(--primary-red);
+            text-shadow: 0 0 25px var(--crimson-glow);
             margin-bottom: 10px;
             transition: transform 0.1s ease-out;
         }
 
         .hero p.subtitle {
             font-size: 1.1rem;
-            color: var(--gold-light);
+            color: var(--red-light);
             font-style: italic;
             margin-bottom: 30px;
             letter-spacing: 1.5px;
@@ -226,7 +227,7 @@
             max-width: 900px;
             height: 400px;
             margin-bottom: 30px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 30px rgba(255, 8, 68, 0.2);
             transition: transform 0.1s ease-out;
         }
 
@@ -244,7 +245,8 @@
 
         .section-header h2 {
             font-size: 2.2rem;
-            color: var(--gold);
+            color: var(--primary-red);
+            text-shadow: 0 0 15px var(--crimson-glow);
             margin-bottom: 10px;
         }
 
@@ -271,10 +273,10 @@
         }
 
         .emperor-text blockquote {
-            border-left: 3px solid var(--gold);
+            border-left: 3px solid var(--primary-red);
             padding-left: 15px;
             font-style: italic;
-            color: var(--gold-light);
+            color: var(--red-light);
             margin: 20px 0;
         }
 
@@ -294,20 +296,20 @@
         }
 
         .war-item:hover {
-            border-color: var(--gold);
+            border-color: var(--primary-red);
             transform: translateX(10px);
-            box-shadow: -5px 0 20px rgba(212, 175, 55, 0.2);
+            box-shadow: -5px 0 20px var(--crimson-glow);
         }
 
         .war-item h3 {
-            color: var(--gold);
+            color: var(--primary-red);
             font-size: 1.3rem;
             margin-bottom: 5px;
         }
 
         .war-item .tag {
             font-size: 0.8rem;
-            color: var(--gold-light);
+            color: var(--red-light);
             margin-bottom: 12px;
             display: inline-block;
         }
@@ -327,15 +329,15 @@
         }
 
         .catalog-card:hover {
-            border-color: var(--gold);
+            border-color: var(--primary-red);
             transform: translateY(-8px);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
+            box-shadow: 0 10px 25px var(--crimson-glow);
         }
 
         .catalog-card .img-placeholder {
             height: 250px;
             border: none;
-            border-bottom: 1px solid var(--gold-dark);
+            border-bottom: 1px solid var(--red-dark);
         }
 
         .catalog-info {
@@ -343,7 +345,7 @@
         }
 
         .catalog-info h3 {
-            color: var(--gold);
+            color: var(--primary-red);
             font-size: 1.1rem;
             margin-bottom: 10px;
         }
@@ -365,14 +367,12 @@
             margin-bottom: 5px;
         }
 
-        
-
         /* EFEK LOADING SPINNER */
         .spinner {
             width: 50px;
             height: 50px;
-            border: 4px solid rgba(212, 175, 55, 0.2);
-            border-top: 4px solid var(--gold);
+            border: 4px solid rgba(255, 8, 68, 0.2);
+            border-top: 4px solid var(--primary-red);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 20px auto;
@@ -396,9 +396,10 @@
         }
 
         .success-box h3 {
-            color: var(--gold);
+            color: var(--primary-red);
             font-size: 1.5rem;
             margin-bottom: 15px;
+            text-shadow: 0 0 10px var(--crimson-glow);
         }
 
         .success-box p {
@@ -424,9 +425,9 @@
             max-width: 700px;
             margin: 0 auto;
             background: var(--bg-card);
-            border: 1px solid var(--gold);
+            border: 1px solid var(--primary-red);
             padding: 40px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 30px rgba(255, 8, 68, 0.2);
             position: relative;
             z-index: 20;
         }
@@ -439,7 +440,7 @@
             display: block;
             font-family: 'Cinzel', serif;
             font-size: 0.85rem;
-            color: var(--gold-light);
+            color: var(--red-light);
             margin-bottom: 8px;
         }
 
@@ -458,27 +459,27 @@
 
         .form-group input:focus,
         .form-group select:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+            border-color: var(--primary-red);
+            box-shadow: 0 0 8px var(--crimson-glow);
         }
 
         .btn-submit {
             width: 100%;
             padding: 15px;
             background: linear-gradient(135deg, var(--primary-red) 0%, #4a0000 100%);
-            color: var(--gold);
+            color: #fff;
             font-family: 'Cinzel', serif;
             font-weight: 800;
-            border: 1px solid var(--gold);
+            border: 1px solid var(--primary-red);
             cursor: pointer;
             transition: 0.3s;
             letter-spacing: 1px;
         }
 
         .btn-submit:hover {
-            background: var(--gold);
-            color: #000;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            background: var(--primary-red);
+            color: #fff;
+            box-shadow: 0 0 25px var(--crimson-glow);
         }
 
         footer {
@@ -527,7 +528,7 @@
             <li><a href="#provinces">War History</a></li>
             <li><a href="#catalog">Legions & Military</a></li>
             <li><a href="#join">Enlistment</a></li>
-            <li><a href="select_faction.html" class="btn-back">&larr; Pilih Faksi</a></li>
+            <li><a href="select_faction.html" class="btn-back-nav">&larr; Pilih Faksi</a></li>
         </ul>
     </header>
 
@@ -537,7 +538,7 @@
         <p class="subtitle">"Glory, Power, and Eternal Valor"</p>
 
         <div class="img-placeholder hero-banner-box" id="hero-banner">
-            <img src="BenderaRedania.png" alt="RedanianImperial Banner" onerror="this.style.display='none';">
+            <img src="BenderaRedania.png" alt="Redanian Imperial Banner" onerror="this.style.display='none';">
         </div>
     </div>
 
@@ -565,7 +566,7 @@
             </div>
 
             <div style="width: 100%; height: 280px; overflow: hidden; border-radius: 8px;">
-                <img src="Raja_Rd.png" alt="RedanianImperial Throne"
+                <img src="Raja_Rd.png" alt="Redanian Imperial Throne"
                     style="width: 35%; height: 100%; object-fit: cover; object-position: top; margin-left: 40%; display: block;"
                     onerror="this.style.display='none';">
             </div>
@@ -613,7 +614,7 @@
                     <p>Heavy infantry trained to breach enemy ranks with giant shields.</p>
                     <ul>
                         <li>✓ Impervious Phalanx Formation</li>
-                        <li>✓ Red-Gold Plate Armor</li>
+                        <li>✓ Red-Crimson Plate Armor</li>
                         <li>✓ Primary Protective Shield</li>
                     </ul>
                 </div>
@@ -696,7 +697,7 @@
     <!-- FOOTER -->
     <footer>
         <p>&copy; Redanian Empire Administration. All Rights Reserved.</p>
-        <p style="color: #444; margin-top: 5px;">Glory, Power, and Eternal Valor!</p>
+        <p style="color: #666; margin-top: 5px;">Glory, Power, and Eternal Valor!</p>
     </footer>
 
     <!-- SCRIPT JAVASCRIPT -->
@@ -736,7 +737,7 @@
             joinBox.innerHTML = `
                 <div style="text-align: center; padding: 40px 0;">
                     <div class="spinner"></div>
-                    <p style="color: var(--gold-light); font-family: 'Cinzel', serif; margin-top: 15px; font-size: 0.9rem;">
+                    <p style="color: var(--red-light); font-family: 'Cinzel', serif; margin-top: 15px; font-size: 0.9rem;">
                         TRANSMITTING OATH OF ALLEGIANCE TO THE REDANIAN IMPERIAL PALACE...
                     </p>
                 </div>
@@ -748,7 +749,7 @@
                         <h3>OATH OF ALLEGIANCE ACCEPTED ⚜️</h3>
                         <p>Thank you, <strong>${nama}</strong> from <strong>${wilayah}</strong>.</p>
                         <br>
-                        <p style="font-size: 1.2rem; color: #fff; font-family: 'Cinzel', serif; border: 1px dashed var(--gold); padding: 15px;">
+                        <p style="font-size: 1.2rem; color: #fff; font-family: 'Cinzel', serif; border: 1px dashed var(--primary-red); padding: 15px;">
                             Welcome to the <strong>${divisi}</strong>. Await further instructions.
                         </p>
                     </div>
@@ -797,7 +798,7 @@
         }
         animateAsh();
 
-        // 4. EFEK ABU API BAGIAN BAWAH (BOTTOM EMBERS)
+        // 4. EFEK ABU API BAGIAN BAWAH (BOTTOM EMBERS METAMORPHOSIS - CRIMSON RED)
         const bCanvas = document.getElementById('bottomEmberCanvas');
         const bCtx = bCanvas.getContext('2d');
 
@@ -817,7 +818,7 @@
                 speedY: -(Math.random() * 1.5 + 0.5),
                 speedX: (Math.random() - 0.5) * 0.8,
                 opacity: Math.random() * 0.8 + 0.2,
-                color: Math.random() > 0.4 ? '139, 0, 0' : '212, 175, 55'
+                color: Math.random() > 0.4 ? '255, 8, 68' : '255, 77, 109'
             });
         }
 
